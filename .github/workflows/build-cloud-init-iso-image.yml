@@ -49,7 +49,8 @@ jobs:
           DEFAULT_USER_PASSWORD: ${{ secrets.DEFAULT_USER_PASSWORD }}
           DEFAULT_USER_SSH_KEY: ${{ secrets.DEFAULT_USER_SSH_KEY }}
         run: |
-          envsubst < "user-data-nosecrets.yml" > "nocloud/user-data"
+          envsubst < "user-data-nosecrets.yml" > "nocloud/user-data" |
+          cat "user-data-nosecrets.yml" # REMOVE IT
 
       - name: Install ISO creator software
         run: |
