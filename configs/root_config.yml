@@ -6,7 +6,6 @@ autoinstall:
   
   keyboard:
     layout: "de"
-    variant:
 
   network:
     version: 2
