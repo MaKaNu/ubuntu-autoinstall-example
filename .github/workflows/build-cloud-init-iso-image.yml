@@ -50,7 +50,8 @@ jobs:
           DEFAULT_USER_SSH_KEY: ${{ secrets.DEFAULT_USER_SSH_KEY }}
         run: |
           envsubst < "user-data-nosecrets.yml" > "nocloud/user-data" |
-          cat "user-data-nosecrets.yml" # REMOVE IT
+          echo $DEFAULT_USER_PASSWORD
+          echo $DEFAULT_USER_SSH_KEY
 
       - name: Install ISO creator software
         run: |
