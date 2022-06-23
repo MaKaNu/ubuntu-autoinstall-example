@@ -2,10 +2,10 @@
 autoinstall:
   version: 1
   
-  locale: de_DE
+  locale: "de_DE"
   
   keyboard:
-    layout: de
+    layout: "de"
     variant:
 
   network:
