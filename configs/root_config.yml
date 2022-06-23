@@ -1,6 +1,12 @@
 #cloud-config
 autoinstall:
   version: 1
+  
+  locale: de_DE
+  
+  keyboard:
+    layout: de
+    variant:
 
   network:
     version: 2
