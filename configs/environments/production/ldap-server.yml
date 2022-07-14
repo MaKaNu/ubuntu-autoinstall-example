@@ -1,0 +1,10 @@
+hostname: ldap-server
+
+ethernets:
+  enp0s3:
+    dhcp4: true
+
+debconf-selections: |
+  postfix   postfix/mailname          string  'lit.ldap.fh-dortmund.de'
+  postfix   postfix/main_mailer_type  select  No configuration
+
