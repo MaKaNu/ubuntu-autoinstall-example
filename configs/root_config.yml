@@ -30,9 +30,9 @@ autoinstall:
     preserve_source_list: false
     primary:
       - arches: [i386, amd64]
-        uri: "http://archive.ubuntu.com/ubuntu
+        uri: "http://archive.ubuntu.com/ubuntu"
       - arches: [default]
-        uri: "http://ports.ubuntu.com/ubuntu-ports
+        uri: "http://ports.ubuntu.com/ubuntu-ports"
     geoip: true
     
   packages:
