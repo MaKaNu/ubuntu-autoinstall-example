@@ -8,3 +8,5 @@ debconf-selections: |
   postfix   postfix/mailname          string  'lit.ldap.fh-dortmund.de'
   postfix   postfix/main_mailer_type  select  No configuration
 
+packages:
+  postfix
