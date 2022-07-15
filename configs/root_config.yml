@@ -39,4 +39,3 @@ autoinstall:
     - curl
     - python3-minimal
     - python3-pip
-    - postfix
