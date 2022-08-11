@@ -54,10 +54,12 @@ jobs:
       - name: Install ISO creator software
         run: |
           sudo apt install genisoimage
+          
+      - name: check yaml file
+        run: cat nocloud/meta-data
 
       - name: Generate ISO Image for the provision USB Stick
         run: |
-          cat nocloud/meta-data
           genisoimage -output nocloud/${{ github.event.inputs.hostname }}.iso \
           -volid cidata \
           -joliet -rock \
