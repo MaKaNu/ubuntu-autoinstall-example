@@ -56,7 +56,9 @@ jobs:
           sudo apt install genisoimage
           
       - name: check yaml file
-        run: cat nocloud/meta-data
+        run: |
+          cat nocloud/user-data
+          cat nocloud/meta-data
 
       - name: Generate ISO Image for the provision USB Stick
         run: |
