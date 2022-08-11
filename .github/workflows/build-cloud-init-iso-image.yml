@@ -57,6 +57,7 @@ jobs:
 
       - name: Generate ISO Image for the provision USB Stick
         run: |
+          echo nocloud/meta-data
           genisoimage -output nocloud/${{ github.event.inputs.hostname }}.iso \
           -volid cidata \
           -joliet -rock \
