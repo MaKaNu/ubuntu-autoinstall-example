@@ -1,1 +1,54 @@
+hostname: invdb
 
+ethernets:
+  enp0s3:
+    dhcp4: true
+    
+packages:
+# Install Dependencies
+  - git
+  - composer
+  - unzip
+  - mcrypt
+  - apache2
+  - mariadb-server
+  - php8.1-cli
+  - libapache2-mod-php8.1
+  - php8.1-bcmath
+  - php8.1-curl
+  - php8.1-gd
+  - php8.1-ldap
+  - php8.1-mbstring
+  - php8.1-mysql
+  - php8.1-xml
+  - php8.1-zip
+  
+late-commands:
+# Clone Snipe IT repo
+  - git clone https://github.com/snipe/snipe-it /var/www/html/snipe-it
+# Copy Example Config
+  - cp /var/www/html/snipe-it/.env.example /var/www/html/snipe-it/.env
+# Edit APP Config
+  - sed -i -e '/APP_URL=.*/ s//APP_URL=http://invdb.lit.fh-dortmund.de/' /var/www/html/snipe-it/.env
+  - sed -i -e '/APP_TIMEZONE=.*/ s//APP_TIMEZONE=Europe/Berlin' /var/www/html/snipe-it/.env
+  - sed -i -e '/APP_LOCALE=.*/ s//APP_LOCALE=de' /var/www/html/snipe-it/.env
+  - echo "\033[0;32m ############################## \033[0m"
+  - echo "\033[0;32m EDIT APP_KEY_MANUAL \033[0m"
+  - echo "\033[0;32m ############################## \033[0m"
+# Edit DB Config
+  - sed -i -e '/DB_DATABASE=.*/ s//DB_DATABASE=snipeit' /var/www/html/snipe-it/.env
+  - sed -i -e '/DB_USERNAME=.*/ s//DB_USERNAME=snipe_user' /var/www/html/snipe-it/.env
+  - echo "\033[0;32m ############################## \033[0m"
+  - echo "\033[0;32m EDIT DB_PASSWORD manual \033[0m"
+  - echo "\033[0;32m ############################## \033[0m"
+# Edit MAIL Config
+  - sed -i -e '/MAIL_DRIVER=.*/ s//MAIL_DRIVER=sendmail' /var/www/html/snipe-it/.env
+  - sed -i -e '/MAIL_HOST=.*/ s//MAIL_HOST=null' /var/www/html/snipe-it/.env
+  - sed -i -e '/MAIL_FROM_ADDR=.*/ s//MAIL_FROM_ADDR=dbinv.lit@fh-dortmund.de' /var/www/html/snipe-it/.env
+  - sed -i -e '/MAIL_REPLYTO_ADDR=.*/ s//MAIL_REPLYTO_ADDR=noreply-snipeit.lit@fh-dortmund.de' /var/www/html/snipe-it/.env
+# Add User and Access
+  - adduser --disabled-login --gecos "" snipeit
+  - chown -R snipeit:www-data /var/www/html/snipe-it/
+  - chmod -R 770 /var/www/html/snipe-it/storage
+  - chmod -R 770 /var/www/html/snipe-it/public/uploads
+  - chmod 660 /var/www/html/snipe-it/.env
