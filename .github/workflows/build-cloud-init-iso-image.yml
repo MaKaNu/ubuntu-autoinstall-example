@@ -58,8 +58,15 @@ jobs:
           
       - name: check yaml file
         run: |
+          echo "--------------"
+          echo " UserData "
+          echo "--------------"
           cat nocloud/user-data
+          echo "--------------"
+          echo " MetaData "
+          echo "--------------"
           cat nocloud/meta-data
+          echo "--------------"
 
       - name: Generate ISO Image for the provision USB Stick
         run: |
