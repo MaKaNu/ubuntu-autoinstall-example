@@ -48,6 +48,7 @@ jobs:
         env:
           DEFAULT_USER_PASSWORD: ${{ secrets.DEFAULT_USER_PASSWORD }}
           DEFAULT_USER_SSH_KEY: ${{ secrets.DEFAULT_USER_SSH_KEY }}
+          DEFAULT_RELAY_HOST: ${{ secrets.DEFAULT_RELAY_HOST }}
         run: |
           envsubst < "user-data-nosecrets.yml" > "nocloud/user-data"
 
