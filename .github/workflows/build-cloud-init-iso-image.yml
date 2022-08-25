@@ -59,6 +59,8 @@ jobs:
       - name: check yaml file
         run: |
           echo "--------------"
+          ls nocloud -la
+          echo "--------------"
           echo " UserData "
           echo "--------------"
           cat nocloud/user-data
