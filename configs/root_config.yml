@@ -39,3 +39,40 @@ autoinstall:
     - curl
     - python3-minimal
     - python3-pip
+    - unattended-upgrades
+    - apt-config-auto-update
+    - postfix
+    - libsasl2-modules
+    - bsd-mailx
+  late-commands:
+  # Configure unattended upgrades
+    - sed '/^\/\/Unattended-Upgrade::Mail .*/s//Unattended-Upgrade::Mail "dbinv.lit@fh-dortmund.de";/' /etc/apt/apt.conf.d/50unattended-upgrades
+    - sed '/^Unattended-Upgrade::Mail .*'/a Unattended-Upgrade::Sender "noreply.dbinv.lit"' /etc/apt/apt.conf.d/50unattended-upgrades
+    - sed '/^\/\/Unattended-Upgrade::MailReport .*/s//Unattended-Upgrade::MailReport "always";/' /etc/apt/apt.conf.d/50unattended-upgrades
+  # Add Aliases
+    - sed '/^postmaster:.*/i root:          root' /etc/aliases
+    - sed '/^postmaster:.*/a webmaster:     root' /etc/aliases
+    - newaliases
+  # Create Sender Canonical
+    - echo "root    dbinv.lit@fh-dortmund.de" > /etc/postfix/sender_canonical
+  # Create Canonical
+    - echo "root                         dbinv.lit@fh-dortmund.de" > /etc/postfix/canonical
+    - echo "root@fh-dortmund.de          dbinv.lit@fh-dortmund.de" > /etc/postfix/canonical
+    - echo "noreply.lit@fh-dortmund.de   dbinv.lit@fh-dortmund.de" > /etc/postfix/canonical
+    - echo "www-data                     dbinv.lit@fh-dortmund.de" > /etc/postfix/canonical
+    - echo "postmaster                   dbinv.lit@fh-dortmund.de" > /etc/postfix/canonical
+  # Convert Postfix Database
+    - postmap /etc/postfix/sender_canonical
+    - postmap /etc/postfix/canonical
+  # Creat mailname
+    - echo "fh-dortmund.de" > /etc/mailname
+  # Reload Postfix
+    - postfix reload
+  # Configure main.cf
+    - sed -i -e '/^alias_maps = .*/a canonical_maps = hash:/etc/postfix/canonical' /etc/postfix/main.cf
+    - sed -i -e '/^mydestination =.*/s/ =.*/ = invdb.lit.fh-dortmund.de, invdb.lit.fh-dortmund.de, localhost.lit.fh-dortmund.de, localhost/' /etc/postfix/main.cf
+    - sed '/^relayhost =.*/s/ =.*/ = '"${DEFAULT_RELAY_HOST}"'/' /etc/postfix/main.cf
+  # Restart Postfix
+    - systemctl restart postfix
+    
+
