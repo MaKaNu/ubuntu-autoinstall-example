@@ -20,8 +20,3 @@ autoinstall:
     allow-pw: no
     authorized-keys:
       - "${DEFAULT_USER_SSH_KEY}"
-
-  packages:
-    - curl
-    - python3-minimal
-    - python3-pip
